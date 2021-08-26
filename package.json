@@ -1,8 +1,9 @@
 {
   "name": "night-api",
   "description": "Ce paquet Npm fourni une interface pour intéragir avec [Night-API](https://night-api.ga)",
-  "version": "1.0.2",
+  "version": "1.1.0-dev",
   "main": "index.js",
+  "types": "index.d.ts",
   "directories": {
     "test": "tests"
   },
@@ -11,7 +12,7 @@
   },
   "repository": {
     "type": "github",
-    "url": "https://github.com/Night-API/Night-API-module"
+    "url": "https://github.com/Night-API/Night-API/tree/dev"
   },
   "keywords": [
     "API",
