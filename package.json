@@ -1,0 +1,36 @@
+{
+  "name": "night-api",
+  "description": "Ce paquet Npm fourni une interface pour intéragir avec [Night-API](https://night-api.ga)",
+  "version": "1.0.3",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/Night-API/Night-API"
+  },
+  "keywords": [
+    "API",
+    "NightAPI",
+    "multifunction",
+    "night-api",
+    "Night"
+  ],
+  "author": "LACOSTAR91",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Night-API/Night-API-module/issues"
+  },
+  "homepage": "https://night-api.com",
+  "engines": {
+    "node": ">= 12.0.0",
+    "npm": ">= 6.9.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
