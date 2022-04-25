@@ -1,5 +1,5 @@
 const { NightAPI } = require('../lib');
-const api = new NightAPI("ZzkQJW9mfX-2iCp6WGXvNgWzhRPQitv-wJzIrRpg19");
+const api = new NightAPI("API_KEY");
 
 (async () => {
     try {
