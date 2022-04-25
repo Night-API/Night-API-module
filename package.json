@@ -1,17 +1,18 @@
 {
   "name": "night-api",
-  "description": "Ce paquet Npm fourni une interface pour intéragir avec [Night-API](https://night-api.ga)",
-  "version": "1.0.3",
-  "main": "index.js",
+  "version": "1.1.0",
+  "description": "Ce paquet Npm fourni une interface pour intéragir avec [Night-API](https://night-api.com)",
+  "main": "lib/index.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -p .",
+    "test": "node tests"
   },
   "repository": {
     "type": "github",
-    "url": "https://github.com/Night-API/Night-API"
+    "url": "https://github.com/Night-API/Night-API-module"
   },
   "keywords": [
     "API",
@@ -31,6 +32,10 @@
     "npm": ">= 6.9.0"
   },
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "axios": "^0.26.1"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.26",
+    "typescript": "^4.6.3"
   }
 }

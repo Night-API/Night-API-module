@@ -1,8 +1,8 @@
-'use strict';
 const kCode = Symbol('code'), messages = new Map();
-function makeNightAPIError(Base) {
+
+function makeNightAPIError(Base: ErrorConstructor | TypeErrorConstructor | RangeErrorConstructor) {
   return class NightAPIError extends Base {
-    constructor(key, ...args) {
+    constructor(key: string, ...args: any[]) {
       super(message(key, args));
       this[kCode] = key;
       if (Error.captureStackTrace) Error.captureStackTrace(this, NightAPIError);
@@ -11,7 +11,8 @@ function makeNightAPIError(Base) {
     get code() { return this[kCode] };
   };
 };
-function message(key, args) {
+
+function message(key: string, args: any[]) {
   if (typeof key !== 'string') throw new Error('Error message key must be a string');
   const msg = messages.get(key);
   if (!msg) throw new Error(`An invalid error message key was used: ${key}.`);
@@ -20,10 +21,11 @@ function message(key, args) {
   args.unshift(msg);
   return String(...args);
 };
-function register(sym, val) { messages.set(sym, typeof val === 'function' ? val : String(val)) };
 
-module.exports = {
-  register,
+function reg(sym, val) { messages.set(sym, typeof val === 'function' ? val : String(val)) };
+
+export default {
+  reg: reg,
   Error: makeNightAPIError(Error),
   TypeError: makeNightAPIError(TypeError),
   RangeError: makeNightAPIError(RangeError),

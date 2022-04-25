@@ -6,7 +6,8 @@
 # NightAPI
 
 Ce paquet Npm fourni une interface pour intéragir avec
-[Night-API](https://night-api.com)
+[Night-API](https://night-api.com)</br></br>
+<strong>Voici la documentation pour vous retrouver plus facilement [Night-API module documentation](https://docs.night-api.com)</strong>
 
 ## Installation
 
@@ -23,10 +24,10 @@ $ npm install night-api
 
 ```js
 // ES6 (includes typings)
-import NightAPI from 'night-api';
+import { NightAPI } from 'night-api';
 
 // CommonJS
-const NightAPI = require('night-api');
+const { NightAPI } = require('night-api');
 ```
 
 ### Initialisation
@@ -58,7 +59,7 @@ const blague = await api.jokes.random({
 ### Blague aléatoire d'une catégorie
 
 ```js
-const blague = await api.jokes.byType('dev');
+const blague = await api.jokes.byType('global');
 ```
 
 ### Blague à partir de son ID
@@ -69,7 +70,7 @@ blague.
 Spécifiez cet identifiant en paramètre et vous l'obtiendez à nouveau.
 
 ```js
-const blague = await api.jokes.byID(50);
+const blague = await api.jokes.byID(44);
 ```
 
 ## Valeur retournée
@@ -78,9 +79,14 @@ const blague = await api.jokes.byID(50);
 // console.log(blague);
 
 {
-  id: 1,
-  type: 'dark',
-  joke: 'Question',
-  answer: 'Response'
+    "status": 200,
+    "content": {
+        "id": 44,
+        "type": "global",
+        "blague": "Que dit un canard quand il va aux toilettes ?",
+        "reponse": "Je vais au petit coin."
+    }
 }
 ```
+
+<strong>Pour voir le reste des fonctionalités du module je vous invite à lire notre [documentation](https://docs.night-api.com)</strong>
