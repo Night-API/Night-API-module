@@ -4,6 +4,6 @@ module.exports = async function jokes(api) {
         api.jokes.byID(1).catch(err => new Error("Jokes.byID() failed"));
         api.jokes.byCategory('dark').catch(err => new Error("Jokes.byCategory() failed"));
     } catch(e) {
-        throw new Error("Jokes() failed");
+        throw new Error(e.message);
     }
 };

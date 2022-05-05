@@ -13,6 +13,11 @@ declare const Endpoints: {
         Animals: {
             dog: string;
             cat: string;
+            fox: string;
+            giraffe: string;
+            kangaroo: string;
+            lion: string;
+            quokka: string;
             wolf: string;
         };
         SFW: {

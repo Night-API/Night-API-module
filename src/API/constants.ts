@@ -6,7 +6,7 @@ const Endpoints = {
     },
     Images: {
         _: "/images", 
-        Animals: { dog: "/dog", cat: "/cat", wolf: "/wolf" },
+        Animals: { dog: "/dog", cat: "/cat", fox: "/fox", giraffe: "/giraffe", kangaroo: "/kangaroo", lion: "/lion", quokka: "/quokka", wolf: "/wolf" },
         SFW: { _: "/sfw"},
         NSFW: { _: "/nsfw"},
     },
