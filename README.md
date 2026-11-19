@@ -2,97 +2,89 @@
 [![NPM](https://img.shields.io/npm/v/night-api?color=crimson&logo=npm)](https://www.npmjs.com/package/night-api)
 [![Download](https://img.shields.io/npm/dt/night-api)](https://www.npmjs.com/package/night-api)
 
+# Night-API
 
-# NightAPI
+Module officiel pour [Night-API](https://night-api.com) : blagues, images (animaux, SFW, NSFW), QR codes, captchas,
+infos IP, serveurs de jeux, ASCII art, disquettes… Typé (TypeScript), sans dépendance.
 
-Ce paquet Npm fourni une interface pour intéragir avec
-[Night-API](https://night-api.com).</br></br>
-<strong>Voici la documentation pour vous retrouver plus facilement [Night-API module documentation](https://docs.night-api.com)</strong>
+📚 Documentation complète (routes HTTP + module au même endroit) : **https://night-api.com/docs**
 
 ## Installation
 
-Vous pouvez simplement installer la dépendance à votre projet depuis Npm:
-
-```shell
+```sh
 npm install night-api
 ```
 
-Ou
+Node.js **18+** requis (utilise `fetch` natif).
 
-```shell
-yarn add night-api
-```
-
-
-## Mise en place
-
-### Importation
+## Démarrage
 
 ```js
-// ES6 (includes typings)
+// ESM / TypeScript
 import { NightAPI } from 'night-api';
-
 // CommonJS
 const { NightAPI } = require('night-api');
+
+const api = new NightAPI(process.env.NIGHT_API_KEY); // clé disponible sur https://night-api.com/dashboard
 ```
 
-### Initialisation
-
-Pour utiliser l'API, vous avez besoin d'une **clé d'authentification** que vous
-pouvez obtenir en vous connectant sur [Night-API](https://night-api.com/)
+Options :
 
 ```js
-const api = new NightAPI('VOTRE_TOKEN_ICI');
-```
-
-## Utilisation
-
-### Blague aléatoire
-
-```js
-const blague = await api.jokes.random();
-```
-
-A cette méthode, vous pouvez spécifier certains types que vous ne souhaitez pas
-recevoir.
-
-```js
-const blague = await api.jokes.random({
-  disallow: ['dark', 'limit']
+new NightAPI(key, {
+  baseUrl: 'https://api.night-api.com', // défaut
+  timeout: 15000,       // ms
+  retries: 1,           // nouvelle tentative automatique après un 429
+  throwOnError: false,  // true : les erreurs rejettent la promesse (NightAPIError)
 });
 ```
 
-### Blague aléatoire d'une catégorie
+## Exemples
 
 ```js
-const blague = await api.jokes.byType('global');
+await api.jokes.random({ disallow: ['dark', 'limit'] });
+await api.jokes.byCategory('dev');
+await api.jokes.byID(44);
+
+await api.animals.dog();        // image aléatoire
+await api.animals.cat(12);      // image précise
+await api.animals.random();     // n'importe quel animal
+await api.animals.types();      // liste + nombre d'images
+
+await api.sfw.coffee();
+await api.nsfw.neko();          // 18+
+
+const qr = await api.qrcode.generate({ text: 'https://night-api.com', size: 500 });
+fs.writeFileSync('qr.png', Buffer.from(qr.content.data));
+await api.qrcode.read(fs.readFileSync('qr.png')); // { type: 'link', target: '…' }
+
+const { content } = await api.captcha.generate(6); // content.code, content.image
+
+await api.utils.ipinfo('8.8.8.8');
+await api.utils.textToAscii('Night');
+await api.games.minecraft('mc.hypixel.net');
+
+await api.fun.disquette({ lang: 'fr' });
+await api.fun.tictactoe(['X', 'X', '', '', 'O', '', '', '', '']);
+
+await api.verify(); // true si la clé est valide
 ```
 
-### Blague à partir de son ID
+Toutes les méthodes renvoient `{ status, content }`, comme l'API.
 
-Les blagues sont identifiées par un ID que vous recevez en même tant que chaque
-blague.
+## Migration depuis la v1
 
-Spécifiez cet identifiant en paramètre et vous l'obtiendez à nouveau.
+- Aucune méthode n'a été supprimée ; `jokes.byType` existe en alias de `byCategory`.
+- La clé n'est plus vérifiée automatiquement dans le constructeur (ça faisait planter le process en cas de clé invalide) : utilisez `await api.verify()`.
+- `axios` n'est plus une dépendance : Node 18 minimum.
+- Nouveautés : `animals.random()`, `animals.types()`, `animals.koala()`, `nsfw.byID()`, `utils.*`, `fun.*`, options `retries` / `throwOnError`, types TypeScript complets.
 
-```js
-const blague = await api.jokes.byID(44);
+## Tests
+
+```sh
+NIGHT_API_KEY=xxx npm test
 ```
 
-## Valeur retournée
+## Licence
 
-```js
-// console.log(blague);
-
-{
-    "status": 200,
-    "content": {
-        "id": 44,
-        "type": "global",
-        "blague": "Que dit un canard quand il va aux toilettes ?",
-        "reponse": "Je vais au petit coin."
-    }
-}
-```
-
-<strong>Pour voir le reste des fonctionalités du module je vous invite à lire notre [documentation](https://docs.night-api.com)</strong>
+MIT — Night Group

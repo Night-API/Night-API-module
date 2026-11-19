@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [stable, refonte-v2]
+  workflow_call:
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm install --no-audit --no-fund
+      - run: npm run build
+      # Tests unitaires toujours ; tests d'intégration si le secret NIGHT_API_KEY est défini
+      - run: node --test tests/*.test.js
+        env:
+          NIGHT_API_KEY: ${{ secrets.NIGHT_API_KEY }}
+      - name: Le paquet publié contient bien lib/
+        run: npm pack --dry-run 2>&1 | grep -q "lib/index.d.ts"
